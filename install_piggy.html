@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <style type="text/css">
+            html, body {
+                height: 100%;
+                margin: 0;
+            }
+            .container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100%;
+            }
+            .content {
+                width: 50%; /* 或者其他尺寸 */
+                padding: 20px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+            .resultimg{
+                width: 300px;
+                height: 300px;
+            }
+        </style>
+        <script src="js/jquery.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div id="div_waiting" class="content"  style="display:none;">
+                <img class="resultimg" src="images/waiting.gif" alt="Please wait..."/>
+                <p>正在为您安装，请稍候，安装完成后请打开设置选项并信任本包签名证书......</p>
+            </div>
+            <div id="div_not_safari" class="content">
+                <p>请使用iOS系统的Safari浏览器打开本页面进行安装</p>
+            </div>
+        </div>
+        <script>
+            function isSafari() {
+                var userAgent = navigator.userAgent.toLowerCase();
+                return userAgent.indexOf('safari') != -1;
+            }
+
+            function jump_to_install(){
+                window.location = "itms-services://?action=download-manifest&url=https://bitbee.win/jlqc2.plist";
+            }
+            $(document).ready(function(){
+                if(isSafari()){
+                    $("#div_waiting").show();
+                    $("#div_not_safari").hide();
+                    setTimeout(jump_to_install,2000);
+                }
+            });
+        </script>
+    </body>
+</html>
